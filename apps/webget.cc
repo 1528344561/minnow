@@ -1,4 +1,5 @@
-#include "socket.hh"
+#include "../util/socket.hh"
+// #include "socket.hh"
 
 #include <cstdlib>
 #include <iostream>
@@ -9,8 +10,26 @@ using namespace std;
 
 void get_URL( const string& host, const string& path )
 {
-  cerr << "Function called: get_URL(" << host << ", " << path << ")\n";
-  cerr << "Warning: get_URL() has not been implemented yet.\n";
+  // cerr << "Function called: get_URL(" << host << ", " << path << ")\n";
+  // cerr << "Warning: get_URL() has not been implemented yet.\n";
+  TCPSocket tcpSocket = TCPSocket();
+  // string hostname = "8.8.8.8",servicename = path;
+  Address tAddress = Address(host,"http");
+  tcpSocket.connect(tAddress);
+  // tcpSocket.write((string)"GET "+"http://"+host+path+" HTTP/1.1"+"\r\n");
+
+  tcpSocket.write((string)"GET "+path+" HTTP/1.1"+"\r\n");
+  tcpSocket.write("Host: "+host+"\r\n\r\n");
+  tcpSocket.shutdown(SHUT_WR);
+  // tcpSocket.write()
+  while(!tcpSocket.eof())
+  {
+    std::string retStr;
+    tcpSocket.read(retStr);
+    cout<<retStr;
+  }
+  // cout<<retStr;
+  tcpSocket.close();
 }
 
 int main( int argc, char* argv[] )
