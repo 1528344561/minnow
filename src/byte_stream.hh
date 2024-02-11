@@ -26,7 +26,7 @@ protected:
   uint64_t capacity_;
   std::string byteBuffer{};
   bool closed_{false};
-  mutable bool finuished_{false};
+  mutable bool finished_{false};
   uint64_t pushedByteNum{0};
   uint64_t popedByteNum{0};
   bool error_ {};
